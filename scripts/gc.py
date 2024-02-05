@@ -42,10 +42,8 @@ class Main(object):
         print(region_rank, player['rank'], player['name'], rating, sep='\t')
 
     def report(self, input_file):
-        print('Loading', input_file)
         with open(input_file, 'r') as f:
             data = json.load(f)
-        print()
         print('Total players:', len(data))
         jp_players = [x for x in data if x.get('jp_rank')]
         print()
@@ -71,7 +69,7 @@ class Main(object):
         for rank in [1,2,3,4,8,16,32,64,128,256,512,1024]:
             self._print_player(tpci_players[rank-1])
 
-    def filter_result(self, input_file, lang):
+    def filter(self, input_file, lang):
         print('Loading', input_file)
         with open(input_file, 'r') as f:
             data = json.load(f)

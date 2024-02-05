@@ -1,4 +1,3 @@
-Loading data/gc1.json
 
 Total players: 20223
 
