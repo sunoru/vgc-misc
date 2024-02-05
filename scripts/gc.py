@@ -36,10 +36,10 @@ class Main(object):
             json.dump(data, f, separators=(',', ':'))
         print('Data saved to', output_file)
 
-    def _print_player(self, player):
+    def _print_player(self, player, file):
         region_rank = player.get('jp_rank') or player.get('kr_rank') or player.get('tpci_rank')
         rating = player['rating_value'] / 1000
-        print(region_rank, player['rank'], player['name'], rating, sep='\t')
+        print(region_rank, player['rank'], player['name'], rating, sep='\t', file=file)
 
     def report(self, input_file):
         with open(input_file, 'r') as f:
@@ -69,15 +69,18 @@ class Main(object):
         for rank in [1,2,3,4,8,16,32,64,128,256,512,1024]:
             self._print_player(tpci_players[rank-1])
 
-    def filter(self, input_file, lang):
-        print('Loading', input_file)
+    def report_langs(self, input_file, output_dir):
         with open(input_file, 'r') as f:
             data = json.load(f)
-        region_rank = lang == 'JPN' and 'jp_rank' or lang == 'KOR' and 'kr_rank' or 'tpci_rank'
-        for each in data:
-            if LANGS[each['lng']] == lang:
-                self._print_player(each)
-        print('Done')
+        os.makedirs(output_dir, exist_ok=True)
+        for lang_i, lang in LANGS.items():
+            print(f'Processing {lang}')
+            with open(os.path.join(output_dir, f'{lang}.tsv'), 'w') as f:
+                print('RegionRank', 'Rank', 'Name', 'Rating', sep='\t', file=f)
+                for each in data:
+                    if each['lng'] == lang_i:
+                        self._print_player(each, file=f)
+        print('Data saved to', output_dir)
 
 if __name__ == '__main__':
     fire.Fire(Main)
