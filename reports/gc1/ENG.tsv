@@ -1,4 +1,4 @@
-RegionRank	Rank	Name	Rating
+Region Rank	Rank	Name	Rating
 1	1	N01AX10	1813.459
 2	2	DeyTey	1811.162
 3	3	Tucu	1809.1
@@ -1566,7 +1566,7 @@ RegionRank	Rank	Name	Rating
 2388	4752	Huub	1546.431
 2389	4755	Ethan	1546.336
 2391	4758	flavs	1546.313
-2392	4759	""just"" Lupa	1546.266
+2392	4759	"""""just"""" Lupa"	1546.266
 2393	4760	Da Best	1546.229
 2395	4762	jUN	1546.185
 2397	4764	Jase	1546.181
@@ -6146,7 +6146,7 @@ RegionRank	Rank	Name	Rating
 9582	17205	James	1434.572
 9584	17208	Scotty	1434.549
 9587	17212	Franklin	1434.51
-9588	17213	""Ohh"" Dawg	1434.501
+9588	17213	"""""Ohh"""" Dawg"	1434.501
 9589	17214	Pete	1434.496
 9590	17216	Pat	1434.48
 9591	17217	Logan	1434.467

@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 
-import fire
+import csv
 import json
 import os
+
+import fire
 
 LANGS = {1: 'JPN', 2: 'ENG', 3: 'FRA', 4: 'ITA', 5: 'GER', 7: 'SPA', 8: 'KOR', 9: 'CHS', 10: 'CHT'}
 
@@ -36,10 +38,13 @@ class Main(object):
             json.dump(data, f, separators=(',', ':'))
         print('Data saved to', output_file)
 
-    def _print_player(self, player, file):
+    def _print_player(self, player, writer=None):
         region_rank = player.get('jp_rank') or player.get('kr_rank') or player.get('tpci_rank')
         rating = player['rating_value'] / 1000
-        print(region_rank, player['rank'], player['name'], rating, sep='\t', file=file)
+        if writer is None:
+            print(region_rank, player['rank'], player['name'], rating, sep='\t')
+        else:
+            writer.writerow([region_rank, player['rank'], player['name'], rating])
 
     def report(self, input_file):
         with open(input_file, 'r') as f:
@@ -76,10 +81,11 @@ class Main(object):
         for lang_i, lang in LANGS.items():
             print(f'Processing {lang}')
             with open(os.path.join(output_dir, f'{lang}.tsv'), 'w') as f:
-                print('RegionRank', 'Rank', 'Name', 'Rating', sep='\t', file=f)
+                writer = csv.writer(f, delimiter='\t')
+                writer.writerow(['Region Rank', 'Rank', 'Name', 'Rating'])
                 for each in data:
                     if each['lng'] == lang_i:
-                        self._print_player(each, file=f)
+                        self._print_player(each, writer=writer)
         print('Data saved to', output_dir)
 
 if __name__ == '__main__':
