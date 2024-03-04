@@ -1,0 +1,31 @@
+Total players: 16173
+
+Japanese players: 7018
+Japanese rank 1-3:
+1	1	しおり	1822.015
+2	2	スカーレット	1816.453
+3	5	スカーレット	1788.704
+Japanese rank 150:
+150	178	しらたま	1739.254
+
+Korean players: 194
+Korean rank 1-3:
+1	62	Spring	1749.916
+2	318	플로젤	1705.459
+3	477	미스터 림	1679.953
+Korean rank 50:
+50	3884	요르 포저	1544.936
+
+TPCi players (assuming all others are in the TPCi region): 8961
+1	3	Hoej	1789.622
+2	4	Nikolaj_H	1788.747
+3	6	Takami$Chika	1786.94
+4	7	Borsalino	1777.928
+8	13	sempra	1772.567
+16	31	ΦΚΨ	1756.192
+32	206	Mirko	1733.361
+64	294	Aery	1709.517
+128	422	Tena 	1686.455
+256	722	Felipão	1656.641
+512	1275	Goldor	1620.441
+1024	2329	Slaymin	1582.084

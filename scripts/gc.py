@@ -3,20 +3,30 @@
 import csv
 import json
 import os
+import requests
 
 import fire
 
 LANGS = {1: 'JPN', 2: 'ENG', 3: 'FRA', 4: 'ITA', 5: 'GER', 7: 'SPA', 8: 'KOR', 9: 'CHS', 10: 'CHT'}
 
+
+def print_player(player, writer=None):
+    region_rank = player.get('jp_rank') or player.get('kr_rank') or player.get('tpci_rank')
+    rating = player['rating_value'] / 1000
+    if writer is None:
+        print(region_rank, player['rank'], player['name'], rating, sep='\t')
+    else:
+        writer.writerow([region_rank, player['rank'], player['name'], rating])
+
 class Main(object):
-    def process_raw(self, input_dir, output_file):
-        print('Processing raw data from', input_dir)
-        filelist = os.listdir(input_dir)
+    # API includes a %d for page number
+    def download_data(self, api, max_page, output_file):
+        print('Processing raw data from', api)
         data = []
-        for filename in filelist:
-            print('Processing', filename)
-            with open(os.path.join(input_dir, filename), 'r') as f:
-                data.extend(json.load(f))
+        for page in range(1, max_page + 1):
+            print('Processing Page', page)
+            p = requests.get(api % page).json()
+            data.extend(p)
         data.sort(key=lambda x: x['rank'])
         jp_rank = 0
         kr_rank = 0
@@ -38,14 +48,6 @@ class Main(object):
             json.dump(data, f, separators=(',', ':'))
         print('Data saved to', output_file)
 
-    def _print_player(self, player, writer=None):
-        region_rank = player.get('jp_rank') or player.get('kr_rank') or player.get('tpci_rank')
-        rating = player['rating_value'] / 1000
-        if writer is None:
-            print(region_rank, player['rank'], player['name'], rating, sep='\t')
-        else:
-            writer.writerow([region_rank, player['rank'], player['name'], rating])
-
     def report(self, input_file):
         with open(input_file, 'r') as f:
             data = json.load(f)
@@ -55,24 +57,24 @@ class Main(object):
         print('Japanese players:', len(jp_players))
         print('Japanese rank 1-3:')
         for i in range(3):
-            self._print_player(jp_players[i])
+            print_player(jp_players[i])
         print('Japanese rank 150:')
-        self._print_player(jp_players[149])
+        print_player(jp_players[149])
 
         kr_players = [x for x in data if x.get('kr_rank')]
         print()
         print('Korean players:', len(kr_players))
         print('Korean rank 1-3:')
         for i in range(3):
-            self._print_player(kr_players[i])
+            print_player(kr_players[i])
         print('Korean rank 50:')
-        self._print_player(kr_players[49])
+        print_player(kr_players[49])
 
         print()
         tpci_players = [x for x in data if x.get('tpci_rank')]
         print('TPCi players (assuming all others are in the TPCi region):', len(tpci_players))
         for rank in [1,2,3,4,8,16,32,64,128,256,512,1024]:
-            self._print_player(tpci_players[rank-1])
+            print_player(tpci_players[rank-1])
 
     def report_langs(self, input_file, output_dir):
         with open(input_file, 'r') as f:
@@ -85,7 +87,7 @@ class Main(object):
                 writer.writerow(['Region Rank', 'Rank', 'Name', 'Rating'])
                 for each in data:
                     if each['lng'] == lang_i:
-                        self._print_player(each, writer=writer)
+                        print_player(each, writer=writer)
         print('Data saved to', output_dir)
 
 if __name__ == '__main__':
