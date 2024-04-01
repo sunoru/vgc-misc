@@ -1,0 +1,31 @@
+Total players: 16018
+
+Japanese players: 6860
+Japanese rank 1-3:
+1	5	AIアンセナ	1805.159
+2	6	てんま	1803.371
+3	8	バイオレット	1785.417
+Japanese rank 150:
+150	177	Riggna	1737.222
+
+Korean players: 190
+Korean rank 1-3:
+1	384	상자	1686.905
+2	606	8A2BE2	1660.328
+3	760	푸름	1649.313
+Korean rank 50:
+50	3899	상미분방정식	1544.595
+
+TPCi players (assuming all others are in the TPCi region): 8968
+1	1	Edu	1818.464
+2	2	Dave	1817.497
+3	3	蓝宝石	1808.167
+4	4	Taran	1805.757
+8	12	Ciq	1777.37
+16	32	Mava	1752.417
+32	209	Hoej	1731.934
+64	281	Mario	1707.306
+128	422	小綱	1680.633
+256	699	Q	1653.45
+512	1206	Mika	1620.973
+1024	2161	Proud	1586.172

@@ -25,8 +25,12 @@ class Main(object):
         data = []
         for page in range(1, max_page + 1):
             print('Processing Page', page)
-            p = requests.get(api % page).json()
-            data.extend(p)
+            try:
+                p = requests.get(api % page).json()
+                data.extend(p)
+            except Exception as e:
+                print('Error: ', e)
+                break
         data.sort(key=lambda x: x['rank'])
         jp_rank = 0
         kr_rank = 0
